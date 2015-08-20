@@ -2,29 +2,8 @@
 
 import sys
 
+from plugins.calculate import calculate
 
-class Result():
-    def __init__(self, **kwargs):
-        self.title = kwargs["title"]
-        self.description = kwargs["description"]
-        self.action = kwargs["action"]
-
-    def run(self):
-        """run the associated action"""
-        raise NotImplemented
-
-    def __str__(self):
-        return "{} || {}".format(self.title, self.description)
-
-
-def calculate(query):
-    r = eval(query)
-    r = Result(
-        title=r,
-        description="copy to clipboard",
-        action="echo {} | xclip".format(r)
-    )
-    return [r]
 
 def search(query):
     plugins = [calculate]
@@ -33,8 +12,12 @@ def search(query):
         results.extend(p(query))
     return results
 
+
 def i_am_feeling_lucky(query):
-    return search(query)[0]
+    r = search(query)[0]
+    r.run()
+    return r
+
 
 if __name__ == "__main__":
     query = ' '.join(sys.argv[1:])
