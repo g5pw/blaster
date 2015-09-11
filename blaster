@@ -9,10 +9,8 @@ from plugins.filesystem import files
 
 def search(query):
     plugins = [files, calculate, echo]
-    results = []
-    for p in plugins:
-        results.extend(p(query))
-    return results
+    results = [p(query) for p in plugins]
+    return [s_res for result in results for s_res in result]
 
 
 def i_am_feeling_lucky(query):
@@ -23,4 +21,4 @@ def i_am_feeling_lucky(query):
 
 if __name__ == "__main__":
     query = ' '.join(sys.argv[1:])
-    [print(r) for r in search(query)]
+    print(*search(query), sep='\n')
