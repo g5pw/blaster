@@ -4,10 +4,11 @@ import sys
 
 from plugins.calculate import calculate
 from plugins.echo import echo
+from plugins.filesystem import files
 
 
 def search(query):
-    plugins = [calculate, echo]
+    plugins = [files, calculate, echo]
     results = []
     for p in plugins:
         results.extend(p(query))
